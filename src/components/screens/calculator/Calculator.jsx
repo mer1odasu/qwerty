@@ -1,13 +1,14 @@
 import EmptyState from "../../ui/EmptyState";
-import Layout from "../../layout/Layout";
+import CalcLayout from "./layout";
+// import Layout from "../../layout/Layout"
 
 const Calculator = () => {
     return (
-        <Layout>
+        <CalcLayout>
             <div className='hidden lg:block lg:pl-80 h-full'>
                 <EmptyState />
             </div>
-        </Layout>
+        </CalcLayout>
     );
 }
 
