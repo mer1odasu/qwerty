@@ -1,10 +1,9 @@
-"use client";
 
 // import { useState } from "react";
 import { HiChevronLeft } from "react-icons/hi";
 import {Link} from "react-router-dom";
 
-const Header= () => {
+const CalculatorHeader= () => {
   // const [drawerOpen, setDrawerOpen] = useState(false);
 
   return (
@@ -42,7 +41,7 @@ const Header= () => {
           </Link>
 
           <div className="flex flex-col dark:text-gray-200 text-lg">
-            <div>Показатели</div>
+            <div className="font-semibold">Калькулятор</div>
             {/* <div className="text-sm font-light text-neutral-500 dark:text-gray-400">
               {statusText}
             </div> */}
@@ -53,4 +52,4 @@ const Header= () => {
   );
 };
 
-export default Header;
+export default CalculatorHeader;

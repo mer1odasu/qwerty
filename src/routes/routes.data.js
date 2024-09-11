@@ -1,6 +1,7 @@
 import SignIn from "../components/screens/signin/signin";
 import SignUp from "../components/screens/signup/Signup";
 import Calculator from "../components/screens/calculator/Calculator";
+import History from "../components/screens/history/History";
 
 export const routes = [
   {
@@ -18,4 +19,9 @@ export const routes = [
 		component: Calculator,
 		isAuth: false,
 	},
+	{
+		path: '/history',
+		component: History,
+    isAuth: false,
+	}
 ];
