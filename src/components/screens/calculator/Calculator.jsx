@@ -1,6 +1,5 @@
 import EmptyState from "../../ui/EmptyState";
 import CalcLayout from "./layout";
-// import Layout from "../../layout/Layout"
 
 const Calculator = () => {
     return (

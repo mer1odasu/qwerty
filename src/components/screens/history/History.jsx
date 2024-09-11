@@ -1,6 +1,5 @@
 import EmptyState from "../../ui/EmptyState";
-import HistoryLayout from "./HistoryLayout";
-// import Layout from "../../layout/Layout"
+import HistoryLayout from "./layout";
 
 const History = () => {
     return (

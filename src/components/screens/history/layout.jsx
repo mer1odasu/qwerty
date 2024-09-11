@@ -1,11 +1,12 @@
 import Sidebar from "../../ui/Sidebar/Sidebar";
 
-// import CalculatorList from "./components/CalculatorLlist";
+import HistoryList from "./components/HistoryList"
 
 const HistoryLayout = ({ children }) => {
     return (
         <Sidebar>
             <div className="h-screen flex">
+							<HistoryList />
                 <div className="flex-grow">
                     {children}
                 </div>
