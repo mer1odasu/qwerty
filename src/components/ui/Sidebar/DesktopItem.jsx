@@ -1,11 +1,12 @@
-import clsx from "clsx";
-import Link from "next/link";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import clsx from 'clsx';
 
 const DesktopItem = ({ label, href, icon: Icon, active, onClick }) => {
   return (
     <li onClick={onClick} key={label}>
       <Link
-        href={href}
+        to={href} // Используйте to вместо href
         className={clsx(
           "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
           active && "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200"

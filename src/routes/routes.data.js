@@ -1,9 +1,8 @@
-import { useMemo } from "react";
 import SignIn from "../components/screens/signin/signin";
 import SignUp from "../components/screens/signup/Signup";
-import CiCalculator1 from 'react-icons/ci-calculator1';
+import Calculator from "../components/screens/calculator/Calculator";
 
-export const routes = useMemo [
+export const routes = [
   {
     path: "/",
     component: SignIn,
@@ -16,7 +15,7 @@ export const routes = useMemo [
   },
 	{
 		path: "/calculator",
-		icon: CiCalculator1,
+		component: Calculator,
 		isAuth: false,
 	},
 ];
