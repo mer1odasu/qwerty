@@ -9,6 +9,7 @@ import { useAuth } from "../hooks/useAuth";
 import { routes } from "./routes.data.js";
 import NotFound from "../components/screens/not-found/Not-found.jsx";
 import NotConfirmed from "../components/screens/not-confirmed/Not-confirmed.jsx";
+import CalcPage from "../components/screens/calculators/CalcPage.jsx"
 
 const RouteGuard = ({ element, isAuth, user }) => {
   const location = useLocation();
@@ -49,7 +50,7 @@ const Router = () => {
             }
           />
         ))}
-
+				<Route path="/calculator/calcpage" element={<CalcPage />} />
         <Route path="/not-confirmed" element={<NotConfirmed />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
