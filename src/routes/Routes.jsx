@@ -4,6 +4,7 @@ import { routes } from "./routes.data.js";
 import NotFound from "../components/screens/not-found/Not-found.jsx";
 import CalcPage from "../components/screens/calculator/CalcPage/CalcPage.jsx";
 import HistoryPage from "../components/screens/history/HistoryPage/HistoryPage.jsx";
+import UsersPage from "../components/screens/admin/Users/UsersPage.jsx"
 
 const Router = () => {
   const { isAuth } = useAuth();
@@ -24,6 +25,7 @@ const Router = () => {
             />
           );
         })}
+				<Route path="/admin/users" element={<UsersPage />} />
 				<Route path="/calculator/calcpage" element={<CalcPage />} />
 				<Route path="/history/historypage" element={<HistoryPage />} />
         <Route path="*" element={<NotFound />} />

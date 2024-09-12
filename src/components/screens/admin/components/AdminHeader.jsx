@@ -1,10 +1,12 @@
+"use client";
 
 // import { useState } from "react";
 import { HiChevronLeft } from "react-icons/hi";
-import {Link} from "react-router-dom";
 
-const CalculatorHeader= () => {
-  // const [drawerOpen, setDrawerOpen] = useState(false);
+import { Link } from "react-router-dom";
+
+
+const AdminHeader = () => {
 
   return (
     <>
@@ -27,7 +29,7 @@ const CalculatorHeader= () => {
       >
         <div className="flex gap-3 items-center">
           <Link
-            href="/calculator"
+            to="/calculator"
             className="
             lg:hidden 
             block 
@@ -41,7 +43,7 @@ const CalculatorHeader= () => {
           </Link>
 
           <div className="flex flex-col dark:text-gray-200 text-lg">
-            <div className="font-bold">История измерений</div>
+            <div>Панель администрирования</div>
             {/* <div className="text-sm font-light text-neutral-500 dark:text-gray-400">
               {statusText}
             </div> */}
@@ -52,4 +54,4 @@ const CalculatorHeader= () => {
   );
 };
 
-export default CalculatorHeader;
+export default AdminHeader;
