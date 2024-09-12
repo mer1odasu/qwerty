@@ -21,10 +21,18 @@ const Button = ({
   `;
 
   const conditionalClasses = `
-    ${disabled ? 'opacity-50 cursor-default' : ''}
-    ${fullWidth ? 'w-full' : ''}
-    ${secondary ? 'text-gray-900 bg-gray-300 hover:bg-gray-400' : 'text-white bg-sky-500 hover:bg-sky-600'}
-    ${danger ? 'text-white bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600' : ''}
+    ${disabled ? "opacity-50 cursor-default" : ""}
+    ${fullWidth ? "w-full" : ""}
+    ${
+      secondary
+        ? "text-gray-900 bg-gray-300 hover:bg-gray-400"
+        : "text-white bg-sky-500 hover:bg-sky-600"
+    }
+    ${
+      danger
+        ? "text-white bg-rose-500 hover:bg-rose-600 focus-visible:outline-rose-600"
+        : ""
+    }
   `;
 
   return (

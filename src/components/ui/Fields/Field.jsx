@@ -1,12 +1,11 @@
-
 const Field = ({ register, name, label, options, error, ...rest }) => {
   return (
     <div>
-			<div className='mt-2'>
-				<input 
-				{...register(name, options)} 
-				{...rest} 
-				className="
+      <div className="mt-2">
+        <input
+          {...register(name, options)}
+          {...rest}
+          className="
 					form-input
 					block 
 					w-full 
@@ -28,9 +27,9 @@ const Field = ({ register, name, label, options, error, ...rest }) => {
 					dark:ring-gray-500
 					dark:text-white
 					"
-				/>
-				{error && <div>{error}</div>}
-			</div>
+        />
+        {error && <div>{error}</div>}
+      </div>
     </div>
   );
 };

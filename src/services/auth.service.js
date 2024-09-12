@@ -5,27 +5,28 @@ import { $axios } from "../api";
 class AuthService {
   async login(login, password) {
     try {
-      const { data } = await $axios.post("/auth/login", {
+      const { data } = await $axios.post("/user/signin", {
         login,
         password,
       });
       if (data.token) Cookies.set(TOKEN, data.token);
+      console.log(data);
       return data;
     } catch (error) {
       throw new Error(error);
     }
   }
-  async register(login, password, email, fullName, numberPhone) {
+  async register(login, password, email, name, patronymic, surname) {
     try {
-      const { data } = await $axios.post("/auth/register", {
+      const { data } = await $axios.post("/user/signup", {
         login,
         password,
         email,
-        fullName,
-        numberPhone,
+        name,
+        patronymic,
+        surname,
       });
       if (data.token) Cookies.set(TOKEN, data.token);
-
       return data;
     } catch (error) {
       throw new Error(error);

@@ -1,14 +1,12 @@
-import Sidebar from "../ui/Sidebar/Sidebar";
-import CalculatorList from "../screens/calculator/components/CalculatorLlist";
+import Sidebar from "./sidebar/Sidebar";
 
 const Layout = ({ children }) => {
-    return (
-        <Sidebar>
-            <div className="h-screen">
-								<CalculatorList />
-                {children}
-            </div>
-        </Sidebar>
-    );
-}
+  return (
+    <div>
+      <Sidebar>
+        <section className="h-screen flex">{children && <div className="flex-grow">{children}</div>}</section>
+      </Sidebar>
+    </div>
+  );
+};
 export default Layout;

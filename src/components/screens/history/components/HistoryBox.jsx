@@ -6,7 +6,7 @@ import { Link } from "react-router-dom"
 // import LoadingModal from "../../../modals/LoadingModal"
 
 
-const AdminBox = () => {
+const HistoryBox = () => {
   const [isLoading, setIsLoading] = useState(false);
 
   return (
@@ -31,7 +31,7 @@ const AdminBox = () => {
         <div className="min-w-0 flex-1">
           <div className="focus:outline-none">
             <div className="flex justify-between items-center mb-1">
-              <Link className="block text-lg font-semibold text-gray-900 hover:text-gray-700 dark:text-gray-200 dark:hover:text-gray-300 transition p-2" to={('/admin/users')}>Список пользователей</Link>
+              <Link className="text-md font-medium text-gray-900 dark:text-gray-200" to={('/history/')}>МИ П.16-2021</Link>
             </div>
           </div>
         </div>
@@ -40,4 +40,4 @@ const AdminBox = () => {
   );
 };
 
-export default AdminBox;
+export default HistoryBox;

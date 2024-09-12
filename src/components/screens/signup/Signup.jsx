@@ -15,7 +15,7 @@ const SignUp = () => {
           src="/images/logo.png"
         />
         <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
-				Войти в аккаунт
+          Войти в аккаунт
         </h2>
 
         <div className="bg-white shadow-lg rounded-lg p-8">
@@ -29,7 +29,7 @@ const SignUp = () => {
                 error={errors?.login?.message}
                 name="login"
                 register={register}
-                options={{ required: "Логин обязательный" }}
+                options={{ required: "Это поле обязательно" }}
                 type="text"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-500 focus:ring-opacity-50"
               />
@@ -43,7 +43,7 @@ const SignUp = () => {
                 error={errors?.password?.message}
                 name="password"
                 register={register}
-                options={{ required: "Пароль обязательный" }}
+                options={{ required: "Это поле обязательно" }}
                 type="password"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-500 focus:ring-opacity-50"
               />
@@ -57,7 +57,7 @@ const SignUp = () => {
                 error={errors?.email?.message}
                 name="email"
                 register={register}
-                options={{ required: "Email обязательный" }}
+                options={{ required: "Это поле обязательно" }}
                 type="text"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-500 focus:ring-opacity-50"
               />
@@ -65,13 +65,13 @@ const SignUp = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                ФИО
+                Имя
               </label>
               <Field
-                error={errors?.fullName?.message}
-                name="fullName"
+                error={errors?.name?.message}
+                name="name"
                 register={register}
-                options={{ required: "ФИО обязательное" }}
+                options={{ required: "Это поле обязательно" }}
                 type="text"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-500 focus:ring-opacity-50"
               />
@@ -79,18 +79,30 @@ const SignUp = () => {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Номер телефона
+                Фамилия
               </label>
               <Field
-                error={errors?.numberPhone?.message}
-                name="numberPhone"
+                error={errors?.surname?.message}
+                name="surname"
                 register={register}
-                options={{ required: "Номер телефона обязательный" }}
+                options={{ required: "Это поле обязательно" }}
                 type="text"
                 className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-500 focus:ring-opacity-50"
               />
             </div>
-
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">
+                Отчество
+              </label>
+              <Field
+                error={errors?.patronymic?.message}
+                name="patronymic"
+                register={register}
+                options={{ required: "Это поле обязательно" }}
+                type="text"
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-500 focus:ring-opacity-50"
+              />
+            </div>
             <div>
               <Button fullWidth type="submit">
                 Зарегистрироваться

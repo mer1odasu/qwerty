@@ -1,10 +1,7 @@
-"use client";
+import HistoryBox from "./HistoryBox";
 
-import { useState } from "react";
-import AdminBox from "./AdminBox";
 
-const AdminList = () => {
-  const [searchBy, setSearchBy] = useState("");
+const HistoryList = () => {
 
   return (
     <aside
@@ -34,13 +31,13 @@ const AdminList = () => {
               dark:text-gray-200
             "
           >
-            Администратор
+            История
           </div>
         </div>
-        <AdminBox />
+        <HistoryBox />
       </div>
     </aside>
   );
 };
 
-export default AdminList;
+export default HistoryList;

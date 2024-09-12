@@ -1,16 +1,20 @@
-import React from 'react';
-import { Link, useLocation } from 'react-router-dom'; // Используем useLocation
-import ProfileItem from "./ProfileItem"; 
-import { CiCalculator1 } from "react-icons/ci"; 
+import React from "react";
+import { Link, useLocation } from "react-router-dom";
+import ProfileItem from "./ProfileItem";
+import { CiCalculator2 } from "react-icons/ci";
 import { GoHistory } from "react-icons/go";
 import { HiArrowLeftOnRectangle, HiUsers } from "react-icons/hi2";
 import clsx from "clsx";
+import Cookies from "js-cookie";
 
 const DesktopSidebar = () => {
-  const location = useLocation(); // Получаем текущее местоположение
+  const location = useLocation();
 
-  const isActive = (path) => location.pathname === path; // Функция проверки активного пути
-
+  const isActive = (path) => location.pathname === path;
+  const handleLogout = async () => {
+    Cookies.remove("token");
+    window.location.reload();
+  };
   return (
     <div
       className="
@@ -36,21 +40,23 @@ const DesktopSidebar = () => {
         <ul role="list" className="flex flex-col items-center space-y-1">
           <li>
             <Link
-              to="/calculator" 
+              to="/calculator"
               className={clsx(
                 "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
-                isActive("/calculator") && "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200" // Подсветка активной ссылки
+                isActive("/calculator") &&
+                  "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200"
               )}
             >
-              <CiCalculator1 className="h-6 w-6 shrink-0" aria-hidden="true" />
+              <CiCalculator2 className="h-6 w-6 shrink-0" aria-hidden="true" />
             </Link>
           </li>
           <li>
             <Link
-              to="/history" 
+              to="/history"
               className={clsx(
                 "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
-                isActive("/history") && "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200" // Подсветка активной ссылки
+                isActive("/history") &&
+                  "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200"
               )}
             >
               <GoHistory className="h-6 w-6 shrink-0" aria-hidden="true" />
@@ -58,10 +64,11 @@ const DesktopSidebar = () => {
           </li>
           <li>
             <Link
-              to="/admin" 
+              to="/admin"
               className={clsx(
                 "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
-                isActive("/admin") && "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200" // Подсветка активной ссылки
+                isActive("/admin") &&
+                  "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200"
               )}
             >
               <HiUsers className="h-6 w-6 shrink-0" aria-hidden="true" />
@@ -69,19 +76,23 @@ const DesktopSidebar = () => {
           </li>
           <li>
             <Link
-              to="/#" 
+              onClick={handleLogout}
               className={clsx(
                 "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
-                isActive("/#") && "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200" // Подсветка активной ссылки
+                isActive("/#") &&
+                  "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200"
               )}
             >
-              <HiArrowLeftOnRectangle className="h-6 w-6 shrink-0" aria-hidden="true" />
+              <HiArrowLeftOnRectangle
+                className="h-6 w-6 shrink-0"
+                aria-hidden="true"
+              />
             </Link>
           </li>
         </ul>
       </nav>
       <nav className="mt-4 flex flex-col justify-between items-center">
-        <ProfileItem /> 
+        <ProfileItem />
       </nav>
     </div>
   );

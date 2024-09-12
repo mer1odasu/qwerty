@@ -15,22 +15,25 @@ export const useSignUp = () => {
     mode: "onChange",
   });
 
-  const { isAuth, setIsAuth } = useAuth();
+  const { isAuth, setIsAuth, setUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuth) {
       navigate("/");
+      window.location.reload();
     }
   }, [isAuth]);
 
   const { mutate, isLoading } = useMutation(
     ["auth"],
-    ({ login, password, email, fullName, numberPhone }) =>
-      AuthService.register(login, password, email, fullName, numberPhone),
+    ({ login, password, email, name, patronymic, surname }) =>
+      AuthService.register(login, password, email, name, patronymic, surname),
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
         setIsAuth(true);
+        console.log("use - ", data);
+        setUser(data);
         reset();
       },
     }
@@ -38,7 +41,6 @@ export const useSignUp = () => {
 
   const onSubmit = (data) => {
     mutate(data);
-    console.log(data);
   };
 
   return useMemo(

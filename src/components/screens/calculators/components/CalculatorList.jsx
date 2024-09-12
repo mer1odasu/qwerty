@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import CalculatorBox from "./HistoryBox";
+import CalculatorBox from "./CalculatorBox";
 
-import React from "react";
+import SearchInput from "../../../ui/SearchInput";
 
 
 
-const HistoryList = () => {
+const CalculatorList = () => {
   const [searchBy, setSearchBy] = useState("");
 
   return (
@@ -38,16 +38,18 @@ const HistoryList = () => {
               dark:text-gray-200
             "
           >
-            История подсчетов
+            Калькулятор
           </div>
         </div>
-        {/* {items.filter(filterBySearch).map((item) => ( */}
+        <SearchInput
+          id="search"
+          placeholder="Поиск по названию"
+          setSearchBy={setSearchBy}
+        />
         <CalculatorBox />
-				{/* // key={item.id} data={item} /> */}
-        {/* ))} */}
       </div>
     </aside>
   );
 };
 
-export default HistoryList;
+export default CalculatorList;

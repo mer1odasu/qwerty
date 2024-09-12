@@ -15,12 +15,13 @@ export const useSignIn = () => {
     mode: "onChange",
   });
 
-  const { isAuth, setIsAuth } = useAuth();
+  const { isAuth, setIsAuth, setUser } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
     if (isAuth) {
       navigate("/");
+      window.location.reload();
     }
   }, [isAuth]);
 
@@ -28,7 +29,9 @@ export const useSignIn = () => {
     ["auth"],
     ({ login, password }) => AuthService.login(login, password),
     {
-      onSuccess: () => {
+      onSuccess: (data) => {
+        console.log("use - ", data);
+        setUser(true);
         setIsAuth(true);
         reset();
       },

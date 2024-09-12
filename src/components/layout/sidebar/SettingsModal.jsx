@@ -2,19 +2,21 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form"; // Импортируйте useForm, если вы его используете
 import Button from "../../ui/button/Button";
 import Field from "../../ui/Fields/Field.jsx";
-import Modal from "../../modals/Modal.jsx";
+import Modal from "./Modals.jsx";
 
 const SettingsModal = ({ isOpen, onClose }) => {
-  const { register, handleSubmit, formState: { errors } } = useForm(); // Добавить обработку форм
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data) => {
     setIsLoading(true);
-    // Выполните любые действия с данными формы
     console.log(data);
-    // Завершите загрузку
     setIsLoading(false);
-    onClose(); // Закрыть модальное окно после успешной отправки
+    onClose();
   };
 
   return (
@@ -39,19 +41,19 @@ const SettingsModal = ({ isOpen, onClose }) => {
 
             <div className="mt-10 flex flex-col gap-y-8">
               <>
-							<div>
-								<label className="block text-sm font-medium text-gray-700 mb-1">
-									ФИО
-								</label>
-								<Field
-									error={errors?.fullName?.message}
-									name="fullName"
-									register={register}
-									options={{ required: "ФИО обязательное" }}
-									type="text"
-									className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-500 focus:ring-opacity-50"
-								/>
-            	</div>
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                    ФИО
+                  </label>
+                  <Field
+                    error={errors?.fullName?.message}
+                    name="fullName"
+                    register={register}
+                    options={{ required: "ФИО обязательное" }}
+                    type="text"
+                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-sky-500 focus:ring focus:ring-sky-500 focus:ring-opacity-50"
+                  />
+                </div>
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">
                     Email
