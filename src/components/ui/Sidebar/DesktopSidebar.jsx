@@ -1,7 +1,15 @@
-import ProfileItem from "./ProfileItem"
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom'; // Используем useLocation
+import ProfileItem from "./ProfileItem"; 
+import { CiCalculator1 } from "react-icons/ci"; 
+import { GoHistory } from "react-icons/go";
+import { HiArrowLeftOnRectangle, HiUsers } from "react-icons/hi2";
+import clsx from "clsx";
 
 const DesktopSidebar = () => {
-  // const location = useLocation(); // Получаем текущее местоположение
+  const location = useLocation(); // Получаем текущее местоположение
+
+  const isActive = (path) => location.pathname === path; // Функция проверки активного пути
 
   return (
     <div
@@ -26,22 +34,53 @@ const DesktopSidebar = () => {
     >
       <nav className="mt-4 flex flex-col justify-between">
         <ul role="list" className="flex flex-col items-center space-y-1">
-          {/* {routes.map(({ label, path, icon }) => (
-            <DesktopItem
-              key={label}
-              label={label}
-              href={path} // Примечание: используем href для DesktopItem
-              icon={icon} // Передаем иконку, если она есть
-              active={location.pathname === path} // Проверяем, активен ли элемент
-            />
-          ))} */}
-					<li>
-						qqqqq
-					</li>
+          <li>
+            <Link
+              to="/calculator" 
+              className={clsx(
+                "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
+                isActive("/calculator") && "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200" // Подсветка активной ссылки
+              )}
+            >
+              <CiCalculator1 className="h-6 w-6 shrink-0" aria-hidden="true" />
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/history" 
+              className={clsx(
+                "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
+                isActive("/history") && "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200" // Подсветка активной ссылки
+              )}
+            >
+              <GoHistory className="h-6 w-6 shrink-0" aria-hidden="true" />
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/admin" 
+              className={clsx(
+                "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
+                isActive("/admin") && "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200" // Подсветка активной ссылки
+              )}
+            >
+              <HiUsers className="h-6 w-6 shrink-0" aria-hidden="true" />
+            </Link>
+          </li>
+          <li>
+            <Link
+              to="/#" 
+              className={clsx(
+                "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
+                isActive("/#") && "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200" // Подсветка активной ссылки
+              )}
+            >
+              <HiArrowLeftOnRectangle className="h-6 w-6 shrink-0" aria-hidden="true" />
+            </Link>
+          </li>
         </ul>
       </nav>
       <nav className="mt-4 flex flex-col justify-between items-center">
-        {/* <ThemeToggle /> */}
         <ProfileItem /> 
       </nav>
     </div>
