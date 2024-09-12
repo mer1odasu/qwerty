@@ -1,159 +1,206 @@
+import React, { useState, useEffect } from 'react';
+import Button from '../../../ui/Button/Button'; // проверьте путь
 
-import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import Button from '../../../ui/Button/Button';
-// import HistoryPage from "@/app/history/historypage/Components/HistoryPage";
+const UsersTable = ({ columns = [], data = [], roles = [] }) => {
+  const [selectedRows, setSelectedRows] = useState(Array(data.length).fill(false));
+  const [searchTerm, setSearchTerm] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  const [roleUpdates, setRoleUpdates] = useState({});
+  const [message, setMessage] = useState("");
 
-const CalcCount = ({ isOpen, onClose }) => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [filter, setFilter] = useState("");
-  const [uBDelta, setUBDelta] = useState("");
-  const [uC, setUC] = useState("");
-  const [U, setU] = useState("");
-  const [resultX, setResultX] = useState("");
+  useEffect(() => {
+    setSelectedRows(Array(data.length).fill(false));
+  }, [data]);
 
-  const {
-    register,
-    watch,
-    setValue,
-    formState: { errors },
-  } = useForm({
-    defaultValues: {
-      measurement1: "",
-      absoluteError: "",
-      significantDigits: "",
-    },
-  });
+  const filteredData = data.filter(row =>
+    columns.some(column =>
+      row[column]?.toString().toLowerCase().includes(searchTerm.toLowerCase())
+    )
+  );
 
-  const measurement1 = watch("measurement1");
-  const absoluteError = watch("absoluteError");
+  const currentRows = filteredData.slice(
+    (currentPage - 1) * rowsPerPage,
+    currentPage * rowsPerPage
+  );
 
-  const k = 2; 
-  const P = 0.95;
+  const totalPages = Math.ceil(filteredData.length / rowsPerPage);
 
-  const calculate = () => {
-    const absError = parseFloat(absoluteError);
-    const measurementX = parseFloat(measurement1);
+  const handleCheckboxChange = (index) => {
+    setSelectedRows(prev => {
+      const newSelection = [...prev];
+      newSelection[index] = !newSelection[index];
+      return newSelection;
+    });
+  };
 
-    if (!isNaN(absError) && !isNaN(measurementX)) {
-      const calculatedUBDelta = (absError / Math.sqrt(3)).toFixed(2);
-      setUBDelta(calculatedUBDelta);
-      setValue('calculation1', calculatedUBDelta);
+  const handleDelete = () => {
+    const selectedIndices = selectedRows
+      .map((isSelected, index) => (isSelected ? index : -1))
+      .filter(index => index !== -1);
 
-      const calculatedUC = Math.sqrt(Math.pow(parseFloat(calculatedUBDelta), 2)).toFixed(2);
-      setUC(calculatedUC);
-      setValue('calculation2', calculatedUC);
+    if (selectedIndices.length === 0) {
+      return alert("Нет выбранных элементов для удаления.");
+    }
 
-      const calculatedU = (k * parseFloat(calculatedUC)).toFixed(2);
-      setU(calculatedU);
-      setValue('calculation3', calculatedU);
-
-      const formattedResult = `(${measurementX.toFixed(2)} ± ${calculatedU}) ; k = ${k}; P = ${P.toFixed(2)}.`;
-      setResultX(formattedResult);
-      setValue('calculation4', formattedResult);
-    } else {
-      setUBDelta("");
-      setUC("");
-      setU("");
-      setValue('calculation1', "");
-      setValue('calculation2', "");
-      setValue('calculation3', "");
-      setResultX("");
-      setValue('calculation4', "");
+    if (window.confirm("Вы уверены, что хотите удалить выбранные элементы?")) {
+      console.log("Удалить элементы:", selectedIndices);
+      setMessage("Элементы успешно удалены.");
+      setSelectedRows(Array(data.length).fill(false));
     }
   };
 
-  useEffect(() => {
-    calculate();
-  }, [measurement1, absoluteError]);
+  const handleCreate = () => {
+    console.log("Создание нового элемента");
+  };
 
-  const options = [
-    { value: "option1", label: "Опция 1" },
-    { value: "option2", label: "Опция 2" },
-    { value: "option3", label: "Опция 3" },
-  ];
+  const handleRoleChange = (index, newRole) => {
+    setRoleUpdates(prev => ({ ...prev, [index]: newRole }));
+    console.log(`Изменить роль для строки ${index}: ${newRole}`);
+  };
 
-  const filteredOptions = options.filter(option =>
-    option.label.toLowerCase().includes(filter.toLowerCase())
-  );
-
-  const onSubmit = async (data) => {
-    setIsLoading(true);
-    console.log("Сохраненные данные:", data);
-    setIsLoading(false);
+  const handleSaveChanges = () => {
+    console.log("Сохранить изменения:", roleUpdates);
+    setMessage("Изменения сохранены.");
   };
 
   return (
-    <div className="mt-5">
-      <form onSubmit={onSubmit} className="space-y-12">
-        <div className="px-6">
-          <label htmlFor="selectOption" className="text-md border-gray-900/10 font-semibold">
-            Определяемый показатель
-          </label>
-          <div className="relative mt-2">
-            <input
-              type="text"
-              placeholder="Поиск..."
-              value={filter}
-              onChange={(e) => setFilter(e.target.value)}
-              className="border rounded px-2 py-1 w-full mb-2"
-              list="optionsList"
-            />
-            <datalist id="optionsList">
-              {filteredOptions.map(option => (
-                <option key={option.value} value={option.label} />
+    <div className="flex flex-col p-4">
+      <div className="flex justify-between mb-4 items-center">
+        <div className="flex items-center space-x-2">
+          <input
+            type="text"
+            placeholder="Поиск..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            className="border rounded-md px-1 py-2.5 w-64 text-sm"
+          />
+          <Button onClick={handleCreate}>Создать</Button>
+          {selectedRows.some(Boolean) && (
+            <Button danger onClick={handleDelete}>Удалить</Button>
+          )}
+        </div>
+      </div>
+
+      <div className="overflow-x-auto shadow-md">
+        <table className="min-w-full border-collapse border border-gray-200 text-center text-sm">
+          <thead>
+            <tr className="bg-gray-100">
+              <th className="border border-gray-300 py-1 px-2">
+                <input
+                  type="checkbox"
+                  onChange={(event) => {
+                    const newValue = event.target.checked;
+                    setSelectedRows(Array(currentRows.length).fill(newValue));
+                  }}
+                  checked={selectedRows.every(Boolean)}
+                />
+              </th>
+              {columns.map((column, index) => (
+                <th className="border border-gray-300 py-1 px-2" key={index}>
+                  {column}
+                </th>
               ))}
-            </datalist>
-          </div>
+              <th className="border border-gray-300 py-1 px-2">Роль</th>
+              <th className="border border-gray-300 py-1 px-2">Действия</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentRows.length > 0 ? (
+              currentRows.map((row, rowIndex) => (
+                <tr className="hover:bg-gray-50" key={rowIndex}>
+                  <td className="border border-gray-300 py-1 px-2">
+                    <input
+                      type="checkbox"
+                      checked={selectedRows[(currentPage - 1) * rowsPerPage + rowIndex] || false}
+                      onChange={() => handleCheckboxChange((currentPage - 1) * rowsPerPage + rowIndex)}
+                    />
+                  </td>
+                  {columns.map((column, colIndex) => (
+                    <td className="border border-gray-300 py-1 px-2" key={colIndex}>
+                      {row[column]}
+                    </td>
+                  ))}
+                  <td className="border border-gray-300 py-1 px-2">
+                    <select
+                      onChange={(e) => handleRoleChange(rowIndex, e.target.value)}
+                      className="border rounded-md bg-white text-black focus:outline-none px-1 py-1 text-sm"
+                    >
+                      {roles.map((role, index) => (
+                        <option key={index} value={role}>{role}</option>
+                      ))}
+                    </select>
+                  </td>
+                  <td className="border border-gray-300 py-1 px-2">
+                    <button
+                      onClick={() => console.log('Редактировать строку:', row)}
+                      className="text-blue-500 hover:underline focus:outline-none text-sm"
+                    >
+                      Изменить
+                    </button>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={columns.length + 2} className="py-2 text-center">
+                  Нет данных для отображения
+                </td>
+              </tr>
+            )}
+          </tbody>
+        </table>
+      </div>
+      
+      <div className="flex justify-between items-center mt-6">
+        <div className="flex items-center">
+          <label className="mr-1 text-sm">Строк на странице:</label>
+          <select
+            value={rowsPerPage}
+            onChange={(e) => setRowsPerPage(Number(e.target.value))}
+            className="border rounded-md px-1 py-1 text-sm"
+          >
+            {[5, 10, 20].map(value => (
+              <option key={value} value={value}>{value}</option>
+            ))}
+          </select>
         </div>
 
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-lg font-semibold px-6">Спецификация измерений:</h2>
-          <div className="mt-6 grid grid-cols-2 gap-6">
-            {["Результат измерений X", "Единица измерений", "Абсолютная погрешность [Δ]: ±", "Разрядность"].map((label, index) => (
-              <div key={index} className="flex items-center px-6">
-                <label htmlFor={`measurement${index + 1}`} className="text-sm text-gray-700 w-1/2">{label}:</label>
-                <input
-                  id={`measurement${index + 1}`}
-                  type="text"
-                  {...register(index === 0 ? `measurement1` : index === 2 ? `absoluteError` : index === 3 ? `significantDigits` : `measurement${index + 1}`, { required: "Это поле обязательно." })}
-                  className="border rounded px-2 py-1 w-1/2"
-                />
-              </div>
-            ))}
-          </div>
+        <div className="flex items-center">
+          <button
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+            className={`px-2 py-1 text-sm ${currentPage === 1 ? 'opacity-50 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-200'} rounded-l-md`}
+          >
+            &laquo; 
+          </button>
+
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentPage(index + 1)}
+              className={`px-2 py-1 border border-gray-300 text-sm ${currentPage === index + 1 ? 'bg-gray-300' : ''}`}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          <button
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            className={`px-2 py-1 text-sm ${currentPage === totalPages ? 'opacity-50 cursor-not-allowed' : 'text-gray-700 hover:bg-gray-200'} rounded-r-md`}
+          >
+            &raquo;
+          </button>
         </div>
 
-        <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-lg font-semibold px-6">Расчёты:</h2>
-          <div className="mt-6 grid grid-cols-2 gap-6">
-            {["Расчёт стандартных неопределённостей (Ub∆=)", "Расчёт суммарной неопределённости (Uc)", "Вычисление расширенной неопределённости (U)", "Представление результатов оценивания неопределённости (X)"].map((label, index) => (
-              <div key={index} className="flex items-center px-6">
-                <label htmlFor={`calculation${index + 1}`} className="text-sm text-gray-900 w-1/2">{label}:</label>
-                <input
-                  id={`calculation${index + 1}`}
-                  type="text"
-                  {...register(`calculation${index + 1}`, { required: "Это поле обязательно." })}
-                  className="border rounded px-2 py-1 w-1/2"
-                  value={index === 0 ? uBDelta : index === 1 ? uC : index === 2 ? U : resultX}
-                  readOnly
-                />
-              </div>
-            ))}
-          </div>
-          <div className="mt-6 flex items-center justify-end gap-x-6 px-6">
-            <Button disabled={isLoading} secondary onClick={onClose}>
-              Отмена
-            </Button>
-            <Button disabled={isLoading} type="submit">
-              Сохранить
-            </Button>
-          </div>
+        <div className="flex space-x-1">
+          <Button secondary onClick={() => console.log("Отмена изменения!")}>Отмена</Button>
+          <Button onClick={() => console.log("Данные сохранены!")}>Сохранить</Button>
         </div>
-      </form>
-      {/* <HistoryPage /> */}
+      </div>
     </div>
   );
 };
 
-export default CalcCount;
+export default UsersTable;

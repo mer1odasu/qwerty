@@ -34,7 +34,7 @@ const AdminList = () => {
               dark:text-gray-200
             "
           >
-            Калькулятор
+            Администратор
           </div>
         </div>
         <AdminBox />
