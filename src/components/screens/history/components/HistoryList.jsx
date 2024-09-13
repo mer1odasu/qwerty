@@ -1,5 +1,6 @@
-import HistoryBox from "./HistoryBox";
+"use client";
 
+import HistoryBox from "./HistoryBox";
 
 const HistoryList = () => {
 

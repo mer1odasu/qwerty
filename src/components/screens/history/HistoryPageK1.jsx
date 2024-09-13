@@ -1,16 +1,18 @@
-import EmptyState from "../../ui/EmptyState";
+import HistoryHeader from "./components/HistoryHeader";
 import Layout from "../../layout/Layout";
 import HistoryList from "./components/HistoryList";
+import HistoryTable from "./HistoryTable"
 
-const Calculator = () => {
+const HistoryPageK1 = () => {
   return (
     <Layout>
       <HistoryList />
       <div className="hidden lg:block lg:pl-80 h-full">
-        <EmptyState />
+        <HistoryHeader />
+				<HistoryTable />
       </div>
     </Layout>
   );
 };
 
-export default Calculator;
+export default HistoryPageK1;

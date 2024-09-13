@@ -6,10 +6,12 @@ import { GoHistory } from "react-icons/go";
 import { HiArrowLeftOnRectangle, HiUsers } from "react-icons/hi2";
 import clsx from "clsx";
 import Cookies from "js-cookie";
+import { useAuth } from "../../../hooks/useAuth";
+import { FiHome } from "react-icons/fi";
 
 const DesktopSidebar = () => {
   const location = useLocation();
-
+  const { user } = useAuth();
   const isActive = (path) => location.pathname === path;
   const handleLogout = async () => {
     Cookies.remove("token");
@@ -40,6 +42,18 @@ const DesktopSidebar = () => {
         <ul role="list" className="flex flex-col items-center space-y-1">
           <li>
             <Link
+              to="/"
+              className={clsx(
+                "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
+                isActive("/") &&
+                  "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200"
+              )}
+            >
+              <FiHome className="h-6 w-6 shrink-0" aria-hidden="true" />
+            </Link>
+          </li>
+          <li>
+            <Link
               to="/calculator"
               className={clsx(
                 "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
@@ -62,18 +76,20 @@ const DesktopSidebar = () => {
               <GoHistory className="h-6 w-6 shrink-0" aria-hidden="true" />
             </Link>
           </li>
-          <li>
-            <Link
-              to="/admin"
-              className={clsx(
-                "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
-                isActive("/admin") &&
-                  "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200"
-              )}
-            >
-              <HiUsers className="h-6 w-6 shrink-0" aria-hidden="true" />
-            </Link>
-          </li>
+          {user.decode.isAdmin && (
+            <li>
+              <Link
+                to="/admin"
+                className={clsx(
+                  "group flex gap-x-3 rounded-md p-3 text-sm leading-6 font-semibold text-gray-500 hover:text-black hover:bg-gray-100 dark:hover:bg-lightgray dark:hover:text-gray-100",
+                  isActive("/admin") &&
+                    "bg-gray-100 text-black dark:bg-lightgray dark:text-gray-200"
+                )}
+              >
+                <HiUsers className="h-6 w-6 shrink-0" aria-hidden="true" />
+              </Link>
+            </li>
+          )}
           <li>
             <Link
               onClick={handleLogout}

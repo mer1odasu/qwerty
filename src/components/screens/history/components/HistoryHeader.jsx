@@ -2,7 +2,7 @@
 import { HiChevronLeft } from "react-icons/hi";
 import { Link } from "react-router-dom";
 
-const CalculatorHeader = () => {
+const HistoryHeader = () => {
   return (
     <>
       <div
@@ -38,10 +38,7 @@ const CalculatorHeader = () => {
           </Link>
 
           <div className="flex flex-col dark:text-gray-200 text-lg">
-            <div>Калькулятор</div>
-            {/* <div className="text-sm font-light text-neutral-500 dark:text-gray-400">
-              {statusText}
-            </div> */}
+            <div>История подсчетов МИ П.16-2021</div>
           </div>
         </div>
       </div>
@@ -49,4 +46,4 @@ const CalculatorHeader = () => {
   );
 };
 
-export default CalculatorHeader;
+export default HistoryHeader;

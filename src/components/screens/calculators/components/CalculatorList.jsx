@@ -5,8 +5,6 @@ import CalculatorBox from "./CalculatorBox";
 
 import SearchInput from "../../../ui/SearchInput";
 
-
-
 const CalculatorList = () => {
   const [searchBy, setSearchBy] = useState("");
 

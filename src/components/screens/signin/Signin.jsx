@@ -1,6 +1,6 @@
 import Button from "../../ui/button/Button";
 import Field from "../../ui/Fields/Field.jsx";
-import LoaderOverlay from "../../ui/LoaderOverlay"; // Импортируем новый компонент
+import LoaderOverlay from "../../ui/LoaderOverlay";
 import { useSignIn } from "./useSignin.js";
 
 const SignIn = () => {
