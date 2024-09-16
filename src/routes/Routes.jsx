@@ -11,6 +11,7 @@ import NotFound from "../components/screens/not-found/Not-found.jsx";
 import NotConfirmed from "../components/screens/not-confirmed/Not-confirmed.jsx";
 import CalcPageK1 from "../components/screens/calculators/CalcPageK1.jsx";
 import HistoryPageK1 from "../components/screens/history/HistoryPageK1.jsx";
+import UsersPage from "../components/screens/admin/pages/users/UsersPage.jsx";
 
 
 const RouteGuard = ({ element, isAuth, user }) => {
@@ -52,6 +53,7 @@ const Router = () => {
             }
           />
         ))}
+				<Route path="/admin/users" element={<UsersPage />} />
         <Route path="/calculator/CalcPageK1" element={<CalcPageK1 />} />
         <Route path="/history/HistoryK1" element={<HistoryPageK1 />} />
         <Route path="/not-confirmed" element={<NotConfirmed />} />

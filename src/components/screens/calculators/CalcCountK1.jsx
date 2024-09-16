@@ -48,7 +48,7 @@ const CalcCountK1 = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-8">
+    <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-lg p-8 mt-6"> {/* Увеличена тень до shadow-xl */}
       <h3 className="text-2xl font-bold text-gray-800 mb-6">
         Расчёт К1 Прямое измерение, абсолютная погрешность
       </h3>
