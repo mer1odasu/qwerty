@@ -3,10 +3,12 @@ import { useCalculator } from "../useCalculator";
 import Input from "../../../ui/Input/Input";
 import Loader from "../../../ui/Loader";
 
-const CalcCountK2 = () => {
+const CalcCountK3 = () => {
   const { errors, handleSubmit, isLoading, onSubmit, register } = useCalculator();
 
-  const [relativeError, setRelativeError] = useState(0);
+	const p = 1.29
+
+	const [absoluteError, setAbsoluteError] = useState(0);
   const [measurementResult, setMeasurementResult] = useState(0);
   const [uncertaintyBType, setUncertaintyBType] = useState(0);
   const [capacity, setCapacity] = useState(2);
@@ -16,7 +18,7 @@ const CalcCountK2 = () => {
 
   const calculateValues = () => {
     // Вычисляем неопределенность по типу B
-    const uncertaintyB = (relativeError * measurementResult) / (100 * Math.sqrt(3));
+		const uncertaintyB = absoluteError / Math.sqrt(3);
     setUncertaintyBType(uncertaintyB);
 
     // Суммарная неопределенность
@@ -46,7 +48,7 @@ const CalcCountK2 = () => {
 
   const saveValues = () => {
     const savedData = {
-      relativeError,
+      absoluteError,
       measurementResult,
       uncertaintyBType,
       capacity,
@@ -63,7 +65,7 @@ const CalcCountK2 = () => {
         {/* Блок выбора единицы измерения */}
         <div className="px-6">
           <h3 className="text-2xl font-bold text-gray-800 mb-6 mt-6">
-            Расчёт К2 Прямое измерение, относительная погрешность
+						Расчёт К3 Скорость расчетный метод с константой p
           </h3>
           <label className="block border-gray-900/10 font-medium">
             Единица измерения:
@@ -85,7 +87,22 @@ const CalcCountK2 = () => {
           <div className="mt-6 grid grid-cols-2 gap-6">
             <div className="flex items-center px-6">
               <label htmlFor="value2" className="text-sm text-gray-700 w-1/2">
-                Результат измерений X:
+                Результат измерений Рд:
+              </label>
+              <Input 
+                error={errors?.resultValue?.message}
+                name="value2"
+                type="number"
+                step="any"
+                register={register}
+                className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
+                value={measurementResult}
+                onChange={(e) => setMeasurementResult(parseFloat(e.target.value))}
+              />
+            </div>
+            <div className="flex items-center px-6">
+              <label htmlFor="value2" className="text-sm text-gray-700 w-1/2">
+                Результат измерений v:
               </label>
               <Input 
                 error={errors?.resultValue?.message}
@@ -109,8 +126,8 @@ const CalcCountK2 = () => {
                 step="any"
                 register={register}
                 className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
-                value={relativeError}
-                onChange={(e) => setRelativeError(parseFloat(e.target.value))}
+                value={absoluteError}
+                onChange={(e) => setAbsoluteError(parseFloat(e.target.value))}
               />
             </div>
             <div className="flex items-center px-6">
@@ -197,7 +214,6 @@ const CalcCountK2 = () => {
               <button
                 type="button"
                 className="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-sky-500 text-white hover:bg-sky-600"
-                onClick={saveValues} // Добавляем вызов функции сохранения
               >
                 Сохранить
               </button>
@@ -209,4 +225,4 @@ const CalcCountK2 = () => {
   );
 };
 
-export default CalcCountK2;
+export default CalcCountK3;
