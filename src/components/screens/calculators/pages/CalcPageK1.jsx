@@ -1,7 +1,7 @@
-import CalcCountK1 from "./CalcCountK1";
-import CalculatorHeader from "./components/CalculatorHeader";
-import Layout from "../../layout/Layout";
-import CalculatorList from "./components/CalculatorList";
+import CalcCountK1 from "../count/CalcCountK1";
+import CalculatorHeader from "../components/CalculatorHeader";
+import Layout from "../../../layout/Layout";
+import CalculatorList from "../components/CalculatorList";
 
 const CalcPageK1 = () => {
   return (

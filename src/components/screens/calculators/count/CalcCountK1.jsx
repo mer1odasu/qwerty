@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { useCalculator } from "./useCalculator";
-import Loader from "../../ui/Loader";
-import Input from "../../ui/Input/Input";
+import { useCalculator } from "../useCalculator";
+import Input from "../../../ui/Input/Input";
+import Loader from "../../../ui/Loader";
 
 const CalcCountK1 = () => {
   const { errors, handleSubmit, isLoading, onSubmit, register } = useCalculator();
@@ -26,9 +26,7 @@ const CalcCountK1 = () => {
     const expandedUncertainty = totalUncertainty * 2;
     setUncertaintyExpanded(expandedUncertainty);
 
-    const result = `(${measurementResult.toFixed(
-      capacity
-    )} ± ${expandedUncertainty.toFixed(capacity)}) ${unit}; k = 2; P = 0,95.`;
+    const result = `(${measurementResult.toFixed(capacity)} ± ${expandedUncertainty.toFixed(capacity)}) ${unit}; k = 2; P = 0,95.`;
 
     setUncertaintyResult(result);
     setIsCalculated(true);
@@ -50,18 +48,18 @@ const CalcCountK1 = () => {
 
   return (
     <div className="">
-      <h3 className="text-2xl font-bold text-gray-800 mb-6">
-        Расчёт К1 Прямое измерение, абсолютная погрешность
-      </h3>
       {isLoading && <Loader />}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
         {/* Блок выбора единицы измерения */}
         <div className="px-6">
+          <h3 className="text-2xl font-bold text-gray-800 mb-6 mt-6">
+            Расчёт К1 Прямое измерение, абсолютная погрешность
+          </h3>
           <label className="block border-gray-900/10 font-medium">
             Единица измерения:
           </label>
           <select
-            className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
+            className="mt-3 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
             value={unit}
             onChange={(e) => setUnit(e.target.value)}
           >
@@ -82,7 +80,8 @@ const CalcCountK1 = () => {
               <Input 
                 error={errors?.resultValue?.message}
                 name="value2"
-                type="text"
+                type="number"
+                step="any"
                 register={register}
                 className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
                 value={measurementResult}
@@ -96,7 +95,8 @@ const CalcCountK1 = () => {
               <Input 
                 error={errors?.resultValue?.message}
                 name="value3"
-                type="text"
+                type="number"
+                step="any"
                 register={register}
                 className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
                 value={absoluteError}
@@ -110,7 +110,8 @@ const CalcCountK1 = () => {
               <Input 
                 error={errors?.resultValue?.message}
                 name="value1"
-                type="text"
+                type="number"
+                step="1"
                 register={register}
                 className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
                 value={capacity}
