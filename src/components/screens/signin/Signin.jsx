@@ -1,4 +1,3 @@
-import Button from "../../ui/button/Button";
 import Field from "../../ui/Fields/Field.jsx";
 import LoaderOverlay from "../../ui/LoaderOverlay";
 import { useSignIn } from "./useSignin.js";
@@ -50,9 +49,12 @@ const SignIn = () => {
             </div>
 
             <div>
-              <Button fullWidth type="submit">
-                Войти
-              </Button>
+						<button 
+								type="submit" 
+								class="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full bg-sky-500 text-white hover:bg-sky-600"
+							>
+								Войти
+						</button>
             </div>
           </form>
           <div className="mt-6">

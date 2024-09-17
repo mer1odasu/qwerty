@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useCalculator } from "./useCalculator";
-import Field from "../../ui/Fields/Field";
 import Loader from "../../ui/Loader";
-import Button from "../../ui/Button/Button";
+import Input from "../../ui/Input/Input";
 
 const CalcCountK1 = () => {
   const { errors, handleSubmit, isLoading, onSubmit, register } = useCalculator();
@@ -27,7 +26,9 @@ const CalcCountK1 = () => {
     const expandedUncertainty = totalUncertainty * 2;
     setUncertaintyExpanded(expandedUncertainty);
 
-    const result = `(${measurementResult.toFixed(capacity)} ± ${expandedUncertainty.toFixed(capacity)}) ${unit}; k = 2; P = 0,95.`;
+    const result = `(${measurementResult.toFixed(
+      capacity
+    )} ± ${expandedUncertainty.toFixed(capacity)}) ${unit}; k = 2; P = 0,95.`;
 
     setUncertaintyResult(result);
     setIsCalculated(true);
@@ -48,59 +49,15 @@ const CalcCountK1 = () => {
   };
 
   return (
-    <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-lg p-8 mt-6"> {/* Увеличена тень до shadow-xl */}
+    <div className="">
       <h3 className="text-2xl font-bold text-gray-800 mb-6">
         Расчёт К1 Прямое измерение, абсолютная погрешность
       </h3>
       {isLoading && <Loader />}
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-        <div>
-          <label className="block text-gray-700 font-medium">
-            Абсолютная погрешность [Δ]:
-          </label>
-          <Field
-            error={errors?.resultValue?.message}
-            name="value3"
-            type="text"
-            register={register}
-            className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-            value={absoluteError}
-            onChange={(e) => setAbsoluteError(parseFloat(e.target.value))}
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700 font-medium">
-            Результат измерений X:
-          </label>
-          <Field
-            error={errors?.resultValue?.message}
-            name="value2"
-            type="text"
-            register={register}
-            className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-            value={measurementResult}
-            onChange={(e) => setMeasurementResult(parseFloat(e.target.value))}
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700 font-medium">
-            Разрядность:
-          </label>
-          <Field
-            error={errors?.resultValue?.message}
-            name="value1"
-            type="text"
-            register={register}
-            className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-            value={capacity}
-            onChange={(e) => setCapacity(parseInt(e.target.value))}
-          />
-        </div>
-
-        <div>
-          <label className="block text-gray-700 font-medium">
+      <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
+        {/* Блок выбора единицы измерения */}
+        <div className="px-6">
+          <label className="block border-gray-900/10 font-medium">
             Единица измерения:
           </label>
           <select
@@ -114,75 +71,125 @@ const CalcCountK1 = () => {
           </select>
         </div>
 
-        <Button fullWidth clickHandler={calculateValues}>
-          Рассчитать
-        </Button>
+        {/* Спецификация измерений */}
+        <div className="border-b border-gray-900/10 pb-12">
+          <h2 className="text-lg font-semibold px-6">Спецификация измерений:</h2>
+          <div className="mt-6 grid grid-cols-2 gap-6">
+            <div className="flex items-center px-6">
+              <label htmlFor="value2" className="text-sm text-gray-700 w-1/2">
+                Результат измерений X:
+              </label>
+              <Input 
+                error={errors?.resultValue?.message}
+                name="value2"
+                type="text"
+                register={register}
+                className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
+                value={measurementResult}
+                onChange={(e) => setMeasurementResult(parseFloat(e.target.value))}
+              />
+            </div>
+            <div className="flex items-center px-6">
+              <label htmlFor="value3" className="text-sm text-gray-700 w-1/2">
+                Абсолютная погрешность [Δ]:
+              </label>
+              <Input 
+                error={errors?.resultValue?.message}
+                name="value3"
+                type="text"
+                register={register}
+                className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
+                value={absoluteError}
+                onChange={(e) => setAbsoluteError(parseFloat(e.target.value))}
+              />
+            </div>
+            <div className="flex items-center px-6">
+              <label htmlFor="value1" className="text-sm text-gray-700 w-1/2">
+                Разрядность:
+              </label>
+              <Input 
+                error={errors?.resultValue?.message}
+                name="value1"
+                type="text"
+                register={register}
+                className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
+                value={capacity}
+                onChange={(e) => setCapacity(parseInt(e.target.value))}
+              />
+            </div>
+          </div>
+          <div className="flex justify-end mb-4 mr-5">
+            <button
+              type="button"
+              className="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-sky-500 text-white hover:bg-sky-600"
+              onClick={calculateValues}
+            >
+              Рассчитать
+            </button>
+          </div>
+        </div>
 
         {isCalculated && (
-          <div className="mt-6 space-y-4">
-            <div>
-              <label className="block text-gray-700 font-medium">
-                Неопределённость по типу В:
-              </label>
-              <Field
-                error={errors?.resultValue?.message}
-                name="uncertaintyBType"
-                type="text"
-                register={register}
-                className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-                value={uncertaintyBType.toFixed(capacity)}
-                readOnly
-              />
+          <div className="border-b border-gray-900/10 pb-12">
+            <h2 className="text-lg font-semibold px-6">Расчёты:</h2>
+            <div className="mt-6 grid grid-cols-2 gap-6">
+              <div className="flex items-center px-6">
+                <label className="text-sm text-gray-900 w-1/2">Неопределённость по типу В:</label>
+                <Input
+                  error={errors?.resultValue?.message}
+                  name="uncertaintyBType"
+                  type="text"
+                  register={register}
+                  className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
+                  value={uncertaintyBType.toFixed(capacity)}
+                  readOnly
+                />
+              </div>
+              <div className="flex items-center px-6">
+                <label className="text-sm text-gray-900 w-1/2">Суммарная неопределённость:</label>
+                <Input
+                  error={errors?.resultValue?.message}
+                  name="uncertaintyTotal"
+                  type="text"
+                  register={register}
+                  className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
+                  value={uncertaintyTotal.toFixed(capacity)}
+                  readOnly
+                />
+              </div>
+              <div className="flex items-center px-6">
+                <label className="text-sm text-gray-900 w-1/2">Расширенная неопределённость:</label>
+                <Input
+                  error={errors?.resultValue?.message}
+                  name="uncertaintyExpanded"
+                  type="text"
+                  register={register}
+                  className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
+                  value={uncertaintyExpanded.toFixed(capacity)}
+                  readOnly
+                />
+              </div>
+              <div className="flex items-center px-6">
+                <label className="text-sm text-gray-900 w-1/2">Результат неопределённости:</label>
+                <Input
+                  error={errors?.resultValue?.message}
+                  name="resultValue"
+                  register={register}
+                  type="text"
+                  className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
+                  value={uncertaintyResult}
+                  readOnly
+                />
+              </div>
             </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">
-                Суммарная неопределённость:
-              </label>
-              <Field
-                error={errors?.resultValue?.message}
-                name="uncertaintyTotal"
-                type="text"
-                register={register}
-                className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-                value={uncertaintyTotal.toFixed(capacity)}
-                readOnly
-              />
+            <div className="flex justify-end mt-5 mb-4 mr-5">
+              <button
+                type="button"
+                className="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-sky-500 text-white hover:bg-sky-600"
+              >
+                Сохранить
+              </button>
             </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">
-                Расширенная неопределённость:
-              </label>
-              <Field
-                error={errors?.resultValue?.message}
-                name="uncertaintyExpanded"
-                type="text"
-                register={register}
-                className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-                value={uncertaintyExpanded.toFixed(capacity)}
-                readOnly
-              />
-            </div>
-
-            <div>
-              <label className="block text-gray-700 font-medium">
-                Результат неопределённости:
-              </label>
-              <Field
-                error={errors?.resultValue?.message}
-                name="resultValue"
-                register={register}
-                type="text"
-                className="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-indigo-500 focus:ring focus:ring-indigo-500 focus:ring-opacity-50"
-                value={uncertaintyResult}
-                readOnly
-              />
-            </div>
-
-            <Button fullWidth type="submit">
-              Сохранить
-            </Button>
           </div>
         )}
       </form>
