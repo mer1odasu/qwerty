@@ -1,13 +1,6 @@
-"use client";
-
-import { useState } from "react";
-import CalculatorBox from "./CalculatorBox";
-
-import SearchInput from "../../../ui/SearchInput";
+import Drop from "../components/dropmenu/Drop";
 
 const CalculatorList = () => {
-  const [searchBy, setSearchBy] = useState("");
-
   return (
     <aside
       className="
@@ -39,13 +32,8 @@ const CalculatorList = () => {
             Калькулятор
           </div>
         </div>
-        <SearchInput
-          id="search"
-          placeholder="Поиск по названию"
-          setSearchBy={setSearchBy}
-        />
-        <CalculatorBox />
       </div>
+      <Drop />
     </aside>
   );
 };

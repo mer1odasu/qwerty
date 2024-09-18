@@ -18,8 +18,26 @@ export const useCalculator = () => {
 
   const { mutate, isLoading } = useMutation(
     ["write"],
-    ({ resultValue }) =>
-      calculatorService.writeCalculationResult(user.decode.sub, 1, resultValue),
+    ({
+      resultValue,
+      value3,
+      value2,
+      value1,
+      uncertaintyBType,
+      uncertaintyTotal,
+      uncertaintyExpanded,
+    }) =>
+      calculatorService.writeCalculationResult(
+        user.decode.sub,
+        1,
+        resultValue,
+        value3,
+        value2,
+        value1,
+        uncertaintyBType,
+        uncertaintyTotal,
+        uncertaintyExpanded
+      ),
     {
       onSuccess: (data) => {
         reset();

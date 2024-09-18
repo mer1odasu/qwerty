@@ -4,7 +4,8 @@ import Input from "../../../ui/Input/Input";
 import Loader from "../../../ui/Loader";
 
 const CalcCountK1 = () => {
-  const { errors, handleSubmit, isLoading, onSubmit, register } = useCalculator();
+  const { errors, handleSubmit, isLoading, onSubmit, register } =
+    useCalculator();
 
   const [absoluteError, setAbsoluteError] = useState(0);
   const [measurementResult, setMeasurementResult] = useState(0);
@@ -26,7 +27,9 @@ const CalcCountK1 = () => {
     const expandedUncertainty = totalUncertainty * 2;
     setUncertaintyExpanded(expandedUncertainty);
 
-    const result = `(${measurementResult.toFixed(capacity)} ± ${expandedUncertainty.toFixed(capacity)}) ${unit}; k = 2; P = 0,95.`;
+    const result = `(${measurementResult.toFixed(
+      capacity
+    )} ± ${expandedUncertainty.toFixed(capacity)}) ${unit}; k = 2; P = 0,95.`;
 
     setUncertaintyResult(result);
     setIsCalculated(true);
@@ -71,13 +74,15 @@ const CalcCountK1 = () => {
 
         {/* Спецификация измерений */}
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-lg font-semibold px-6">Спецификация измерений:</h2>
+          <h2 className="text-lg font-semibold px-6">
+            Спецификация измерений:
+          </h2>
           <div className="mt-6 grid grid-cols-2 gap-6">
             <div className="flex items-center px-6">
               <label htmlFor="value2" className="text-sm text-gray-700 w-1/2">
                 Результат измерений X:
               </label>
-              <Input 
+              <Input
                 error={errors?.resultValue?.message}
                 name="value2"
                 type="number"
@@ -85,14 +90,16 @@ const CalcCountK1 = () => {
                 register={register}
                 className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
                 value={measurementResult}
-                onChange={(e) => setMeasurementResult(parseFloat(e.target.value))}
+                onChange={(e) =>
+                  setMeasurementResult(parseFloat(e.target.value))
+                }
               />
             </div>
             <div className="flex items-center px-6">
               <label htmlFor="value3" className="text-sm text-gray-700 w-1/2">
                 Абсолютная погрешность [Δ]:
               </label>
-              <Input 
+              <Input
                 error={errors?.resultValue?.message}
                 name="value3"
                 type="number"
@@ -107,7 +114,7 @@ const CalcCountK1 = () => {
               <label htmlFor="value1" className="text-sm text-gray-700 w-1/2">
                 Разрядность:
               </label>
-              <Input 
+              <Input
                 error={errors?.resultValue?.message}
                 name="value1"
                 type="number"
@@ -135,7 +142,9 @@ const CalcCountK1 = () => {
             <h2 className="text-lg font-semibold px-6">Расчёты:</h2>
             <div className="mt-6 grid grid-cols-2 gap-6">
               <div className="flex items-center px-6">
-                <label className="text-sm text-gray-900 w-1/2">Неопределённость по типу В:</label>
+                <label className="text-sm text-gray-900 w-1/2">
+                  Неопределённость по типу В:
+                </label>
                 <Input
                   error={errors?.resultValue?.message}
                   name="uncertaintyBType"
@@ -147,7 +156,9 @@ const CalcCountK1 = () => {
                 />
               </div>
               <div className="flex items-center px-6">
-                <label className="text-sm text-gray-900 w-1/2">Суммарная неопределённость:</label>
+                <label className="text-sm text-gray-900 w-1/2">
+                  Суммарная неопределённость:
+                </label>
                 <Input
                   error={errors?.resultValue?.message}
                   name="uncertaintyTotal"
@@ -159,7 +170,9 @@ const CalcCountK1 = () => {
                 />
               </div>
               <div className="flex items-center px-6">
-                <label className="text-sm text-gray-900 w-1/2">Расширенная неопределённость:</label>
+                <label className="text-sm text-gray-900 w-1/2">
+                  Расширенная неопределённость:
+                </label>
                 <Input
                   error={errors?.resultValue?.message}
                   name="uncertaintyExpanded"
@@ -171,7 +184,9 @@ const CalcCountK1 = () => {
                 />
               </div>
               <div className="flex items-center px-6">
-                <label className="text-sm text-gray-900 w-1/2">Результат неопределённости:</label>
+                <label className="text-sm text-gray-900 w-1/2">
+                  Результат неопределённости:
+                </label>
                 <Input
                   error={errors?.resultValue?.message}
                   name="resultValue"
@@ -184,10 +199,7 @@ const CalcCountK1 = () => {
               </div>
             </div>
             <div className="flex justify-end mt-5 mb-4 mr-5">
-              <button
-                type="button"
-                className="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-sky-500 text-white hover:bg-sky-600"
-              >
+              <button className="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 bg-sky-500 text-white hover:bg-sky-600">
                 Сохранить
               </button>
             </div>

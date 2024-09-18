@@ -1,86 +1,60 @@
-import { useMemo } from 'react';
-import { MantineReactTable, useMantineReactTable } from 'mantine-react-table';
+import { useMemo } from "react";
+import { MantineReactTable, useMantineReactTable } from "mantine-react-table";
+import Loader from "../../../../ui/Loader";
+import { GiConfirmed } from "react-icons/gi";
+import { MdOutlineNotInterested } from "react-icons/md";
 
-//nested data is ok, see accessorKeys in ColumnDef below
-const data = [
-  {
-    name: {
-      firstName: 'Zachary',
-      lastName: 'Davis',
-    },
-    address: '261 Battle Ford',
-    city: 'Columbus',
-    state: 'Ohio',
-  },
-  {
-    name: {
-      firstName: 'Robert',
-      lastName: 'Smith',
-    },
-    address: '566 Brakus Inlet',
-    city: 'Westerville',
-    state: 'West Virginia',
-  },
-  {
-    name: {
-      firstName: 'Kevin',
-      lastName: 'Yan',
-    },
-    address: '7777 Kuhic Knoll',
-    city: 'South Linda',
-    state: 'West Virginia',
-  },
-  {
-    name: {
-      firstName: 'John',
-      lastName: 'Upton',
-    },
-    address: '722 Emie Stream',
-    city: 'Huntington',
-    state: 'Washington',
-  },
-  {
-    name: {
-      firstName: 'Nathan',
-      lastName: 'Harris',
-    },
-    address: '1 Kuhic Knoll',
-    city: 'Ohiowa',
-    state: 'Nebraska',
-  },
-];
-
-const UserTable = () => {
-  //should be memoized or stable
+const UserTable = ({ users }) => {
+  if (!users) {
+    return <Loader />;
+  }
   const columns = useMemo(
     () => [
       {
-        accessorKey: 'name.firstName', //access nested data with dot notation
-        header: 'First Name',
+        accessorKey: "name",
+        header: "First Name",
       },
       {
-        accessorKey: 'name.lastName',
-        header: 'Last Name',
+        accessorKey: "surname",
+        header: "Last Name",
       },
       {
-        accessorKey: 'address', //normal accessorKey
-        header: 'Address',
+        accessorKey: "patronymic",
+        header: "Patronymic",
       },
       {
-        accessorKey: 'city',
-        header: 'City',
+        accessorKey: "email",
+        header: "Email",
       },
       {
-        accessorKey: 'state',
-        header: 'State',
+        accessorKey: "login",
+        header: "Login",
+      },
+      {
+        accessorKey: "isAdmin",
+        header: "Admin",
+        Cell: ({ cell }) => (
+          <span>
+            {cell.getValue() ? <GiConfirmed /> : <MdOutlineNotInterested />}
+          </span>
+        ),
+      },
+      {
+        accessorKey: "isConfirmed",
+        header: "Confirmed",
+        Cell: ({ cell }) => (
+          <span>
+            {cell.getValue() ? <GiConfirmed /> : <MdOutlineNotInterested />}
+          </span>
+        ),
       },
     ],
-    [],
+    []
   );
 
   const table = useMantineReactTable({
     columns,
-    data, //must be memoized or stable (useState, useMemo, defined outside of this component, etc.)
+    data: users,
   });
 
   return <MantineReactTable table={table} />;

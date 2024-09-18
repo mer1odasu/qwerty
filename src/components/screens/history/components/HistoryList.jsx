@@ -1,6 +1,4 @@
-"use client";
-
-import HistoryBox from "./HistoryBox";
+import DropMenu from "../components/HistoryDrop/DropMenu";
 
 const HistoryList = () => {
 
@@ -35,8 +33,8 @@ const HistoryList = () => {
             История
           </div>
         </div>
-        <HistoryBox />
       </div>
+			<DropMenu />
     </aside>
   );
 };

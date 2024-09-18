@@ -1,5 +1,4 @@
-import Button from "../../ui/button/Button";
-import Field from "../../ui/Fields/Field.jsx";
+import Field from "../../ui/Fields/Field";
 import Loader from "../../ui/Loader.jsx";
 import { useSignUp } from "./useSignup.js";
 
@@ -104,9 +103,12 @@ const SignUp = () => {
               />
             </div>
             <div>
-              <Button fullWidth type="submit">
+              <button
+                type="submit"
+                class="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full bg-sky-500 text-white hover:bg-sky-600"
+              >
                 Зарегистрироваться
-              </Button>
+              </button>
             </div>
           </form>
 

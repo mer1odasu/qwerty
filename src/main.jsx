@@ -1,6 +1,7 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
+import React, { useState } from 'react';
 import AuthProvider from "./providers/AuthProvider";
 import Router from "./routes/Routes";
 import "./global.css";

@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { useForm } from "react-hook-form"; // Импортируйте useForm, если вы его используете
-import Button from "../../ui/button/Button";
+import { useForm } from "react-hook-form";
 import Field from "../../ui/Fields/Field.jsx";
 import Modal from "./Modals.jsx";
 
@@ -94,12 +93,21 @@ const SettingsModal = ({ isOpen, onClose }) => {
             gap-x-6
           "
         >
-          <Button disabled={isLoading} secondary onClick={onClose}>
+          <button
+            class="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full bg-sky-500 text-white hover:bg-sky-600"
+            disabled={isLoading}
+            secondary
+            onClick={onClose}
+          >
             Отмена
-          </Button>
-          <Button disabled={isLoading} type="submit">
+          </button>
+          <button
+            class="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full bg-sky-500 text-white hover:bg-sky-600"
+            disabled={isLoading}
+            type="submit"
+          >
             Сохранить
-          </Button>
+          </button>
         </div>
       </form>
     </Modal>
