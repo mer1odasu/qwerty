@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useAuth } from "../../../hooks/useAuth";
 import calculatorService from "../../../services/calculator.service";
 
-export const useCalculator = () => {
+export const useCalculator = (CalculatorId) => {
   const {
     register,
     handleSubmit,
@@ -29,7 +29,7 @@ export const useCalculator = () => {
     }) =>
       calculatorService.writeCalculationResult(
         user.decode.sub,
-        1,
+        CalculatorId,
         resultValue,
         value3,
         value2,

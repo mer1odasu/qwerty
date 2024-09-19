@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import ProfileItem from "./ProfileItem";
 import { CiCalculator2 } from "react-icons/ci";
 import { GoHistory } from "react-icons/go";
@@ -13,8 +13,10 @@ const DesktopSidebar = () => {
   const location = useLocation();
   const { user } = useAuth();
   const isActive = (path) => location.pathname === path;
+  const navigate = useNavigate();
   const handleLogout = async () => {
     Cookies.remove("token");
+    navigate("/");
     window.location.reload();
   };
   return (

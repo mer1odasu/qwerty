@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Field from "../../ui/Fields/Field";
 import Loader from "../../ui/Loader.jsx";
 import { useSignUp } from "./useSignup.js";
@@ -116,12 +117,12 @@ const SignUp = () => {
             <div className="relative">
               <div className="mt-4 flex justify-center gap-2 text-sm text-gray-500">
                 <div>У вас уже есть аккаунт?</div>
-                <a
-                  href="/"
+                <Link
+                  to="/"
                   className="font-medium text-gray-500 hover:text-gray-600 cursor-pointer underline"
                 >
                   Войдите
-                </a>
+                </Link>
               </div>
             </div>
           </div>

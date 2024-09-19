@@ -1,9 +1,17 @@
+import { useState } from "react";
 import Field from "../../ui/Fields/Field.jsx";
 import LoaderOverlay from "../../ui/LoaderOverlay";
+import ErrorMessage from "../../ui/Notification/ErrorMessage.jsx";
 import { useSignIn } from "./useSignin.js";
+import { Link } from "react-router-dom";
 
 const SignIn = () => {
-  const { errors, handleSubmit, isLoading, onSubmit, register } = useSignIn();
+  const { errors, handleSubmit, isLoading, onSubmit, register, authError } =
+    useSignIn(); // Получаем authError
+
+  const handleFormSubmit = (data) => {
+    onSubmit(data);
+  };
 
   return (
     <div className="flex min-h-screen flex-col justify-center py-12 px-4 bg-gray-100 sm:px-6 lg:px-8">
@@ -18,8 +26,9 @@ const SignIn = () => {
         </h2>
 
         <div className="bg-white shadow-lg rounded-lg p-8">
-          {isLoading && <LoaderOverlay />}{" "}
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+          {isLoading && <LoaderOverlay />}
+          <ErrorMessage message={authError} />
+          <form onSubmit={handleSubmit(handleFormSubmit)} className="space-y-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
                 Логин
@@ -49,7 +58,7 @@ const SignIn = () => {
             </div>
 
             <div>
-              <button class="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full bg-sky-500 text-white hover:bg-sky-600">
+              <button className="flex justify-center rounded-md px-3 py-2 text-sm font-semibold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 w-full bg-sky-500 text-white hover:bg-sky-600">
                 Войти
               </button>
             </div>
@@ -58,12 +67,12 @@ const SignIn = () => {
             <div className="relative">
               <div className="mt-4 flex justify-center gap-2 text-sm text-gray-500">
                 <div>У вас нет аккаунта?</div>
-                <a
-                  href="/register"
+                <Link
+                  to="/register"
                   className="font-medium text-gray-500 hover:text-gray-600 cursor-pointer underline"
                 >
                   Зарегистрируйтесь
-                </a>
+                </Link>
               </div>
             </div>
           </div>

@@ -8,14 +8,6 @@ import {
 import { useAuth } from "../hooks/useAuth";
 import { routes } from "./routes.data.js";
 import NotFound from "../components/screens/not-found/Not-found.jsx";
-import NotConfirmed from "../components/screens/not-confirmed/Not-confirmed.jsx";
-import CalcPageK1 from "../components/screens/calculators/pages/CalcPageK1.jsx";
-import CalcPageK2 from "../components/screens/calculators/pages/CalcPageK2.jsx"
-import CalcPageK3 from "../components/screens/calculators/pages/CalcPageK3.jsx"
-import HistoryPageK1 from "../components/screens/history/pages/HistoryPageK1.jsx";
-import HistoryPageK2 from "../components/screens/history/pages/HistoryPageK2.jsx";
-import UsersPage from "../components/screens/admin/pages/users/UsersPage.jsx";
-
 
 const RouteGuard = ({ element, isAuth, user }) => {
   const location = useLocation();
@@ -56,13 +48,6 @@ const Router = () => {
             }
           />
         ))}
-				<Route path="/admin/users" element={<UsersPage />} />
-        <Route path="/calculator/CalcPageK1" element={<CalcPageK1 />} />
-        <Route path="/calculator/CalcPageK2" element={<CalcPageK2 />} />
-				<Route path="/calculator/CalcPageK3" element={<CalcPageK3 />} />
-        <Route path="/history/HistoryK1" element={<HistoryPageK1 />} />
-				<Route path="/history/HistoryK2" element={<HistoryPageK2 />} />
-        <Route path="/not-confirmed" element={<NotConfirmed />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>

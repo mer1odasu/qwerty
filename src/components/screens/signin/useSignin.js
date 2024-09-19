@@ -1,5 +1,5 @@
 import { useMutation } from "react-query";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
@@ -17,6 +17,7 @@ export const useSignIn = () => {
 
   const { isAuth, setIsAuth, setUser } = useAuth();
   const navigate = useNavigate();
+  const [authError, setAuthError] = useState("");
 
   useEffect(() => {
     if (isAuth) {
@@ -30,10 +31,12 @@ export const useSignIn = () => {
     ({ login, password }) => AuthService.login(login, password),
     {
       onSuccess: (data) => {
-        console.log("use - ", data);
         setUser(true);
         setIsAuth(true);
         reset();
+      },
+      onError: (error) => {
+        setAuthError(error.response?.data?.message || "Ошибка авторизации");
       },
     }
   );
@@ -49,7 +52,8 @@ export const useSignIn = () => {
       errors,
       isLoading,
       onSubmit,
+      authError,
     }),
-    [errors, isLoading]
+    [errors, isLoading, authError]
   );
 };

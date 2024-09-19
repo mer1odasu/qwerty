@@ -4,18 +4,14 @@ import { $axios } from "../api";
 
 class AuthService {
   async login(login, password) {
-    try {
-      const { data } = await $axios.post("/user/signin", {
-        login,
-        password,
-      });
-      if (data.token) Cookies.set(TOKEN, data.token);
-      console.log(data);
-      return data;
-    } catch (error) {
-      throw new Error(error);
-    }
+    const { data } = await $axios.post("/user/signin", {
+      login,
+      password,
+    });
+    if (data.token) Cookies.set(TOKEN, data.token);
+    return data;
   }
+
   async register(login, password, email, name, patronymic, surname) {
     try {
       const { data } = await $axios.post("/user/signup", {

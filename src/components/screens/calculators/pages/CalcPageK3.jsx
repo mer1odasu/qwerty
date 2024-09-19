@@ -3,7 +3,7 @@ import CalculatorHeader from "../components/CalculatorHeader";
 import Layout from "../../../layout/Layout";
 import CalculatorList from "../components/CalculatorList";
 
-const CalcPageK1 = () => {
+const CalcPageK3 = () => {
   return (
     <Layout>
       <div>
@@ -17,4 +17,4 @@ const CalcPageK1 = () => {
   );
 };
 
-export default CalcPageK1;
+export default CalcPageK3;

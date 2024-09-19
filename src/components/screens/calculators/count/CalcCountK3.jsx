@@ -4,11 +4,12 @@ import Input from "../../../ui/Input/Input";
 import Loader from "../../../ui/Loader";
 
 const CalcCountK3 = () => {
-  const { errors, handleSubmit, isLoading, onSubmit, register } = useCalculator();
+  const { errors, handleSubmit, isLoading, onSubmit, register } =
+    useCalculator();
 
-	const p = 1.29
+  const p = 1.29;
 
-	const [absoluteError, setAbsoluteError] = useState(0);
+  const [absoluteError, setAbsoluteError] = useState(0);
   const [measurementResult, setMeasurementResult] = useState(0);
   const [uncertaintyBType, setUncertaintyBType] = useState(0);
   const [capacity, setCapacity] = useState(2);
@@ -17,33 +18,27 @@ const CalcCountK3 = () => {
   const [unit, setUnit] = useState("мг/м³");
 
   const calculateValues = () => {
-    // Вычисляем неопределенность по типу B
-		const uncertaintyB = absoluteError / Math.sqrt(3);
+    const uncertaintyB = absoluteError / Math.sqrt(3);
     setUncertaintyBType(uncertaintyB);
-
-    // Суммарная неопределенность
     const totalUncertainty = getUncertaintyTotal();
-    
-    // Расширенная неопределенность
     const expandedUncertainty = getUncertaintyExpanded(totalUncertainty);
-    
-    // Формирование результата
     const result = getUncertaintyResult(expandedUncertainty);
-    
     setUncertaintyResult(result);
     setIsCalculated(true);
   };
 
   const getUncertaintyTotal = () => {
-    return uncertaintyBType; // Здесь можно добавить дополнительные компоненты, если нужно
+    return uncertaintyBType;
   };
 
   const getUncertaintyExpanded = (totalUncertainty) => {
-    return totalUncertainty * 2; // Расширенная неопределенность
+    return totalUncertainty * 2;
   };
 
   const getUncertaintyResult = (expandedUncertainty) => {
-    return `(${measurementResult.toFixed(capacity)} ± ${expandedUncertainty.toFixed(capacity)}) ${unit}; k = 2; P = 0,95.`;
+    return `(${measurementResult.toFixed(
+      capacity
+    )} ± ${expandedUncertainty.toFixed(capacity)}) ${unit}; k = 2; P = 0,95.`;
   };
 
   const saveValues = () => {
@@ -62,10 +57,9 @@ const CalcCountK3 = () => {
     <div className="">
       {isLoading && <Loader />}
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-12">
-        {/* Блок выбора единицы измерения */}
         <div className="px-6">
           <h3 className="text-2xl font-bold text-gray-800 mb-6 mt-6">
-						Расчёт К3 Скорость расчетный метод с константой p
+            Расчёт К3 Скорость расчетный метод с константой p
           </h3>
           <label className="block border-gray-900/10 font-medium">
             Единица измерения:
@@ -80,16 +74,16 @@ const CalcCountK3 = () => {
             <option value="л/мин">Скорость отбора л/мин</option>
           </select>
         </div>
-
-        {/* Спецификация измерений */}
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 className="text-lg font-semibold px-6">Спецификация измерений:</h2>
+          <h2 className="text-lg font-semibold px-6">
+            Спецификация измерений:
+          </h2>
           <div className="mt-6 grid grid-cols-2 gap-6">
             <div className="flex items-center px-6">
               <label htmlFor="value2" className="text-sm text-gray-700 w-1/2">
                 Результат измерений Рд:
               </label>
-              <Input 
+              <Input
                 error={errors?.resultValue?.message}
                 name="value2"
                 type="number"
@@ -97,14 +91,16 @@ const CalcCountK3 = () => {
                 register={register}
                 className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
                 value={measurementResult}
-                onChange={(e) => setMeasurementResult(parseFloat(e.target.value))}
+                onChange={(e) =>
+                  setMeasurementResult(parseFloat(e.target.value))
+                }
               />
             </div>
             <div className="flex items-center px-6">
               <label htmlFor="value2" className="text-sm text-gray-700 w-1/2">
                 Результат измерений v:
               </label>
-              <Input 
+              <Input
                 error={errors?.resultValue?.message}
                 name="value2"
                 type="number"
@@ -112,14 +108,16 @@ const CalcCountK3 = () => {
                 register={register}
                 className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
                 value={measurementResult}
-                onChange={(e) => setMeasurementResult(parseFloat(e.target.value))}
+                onChange={(e) =>
+                  setMeasurementResult(parseFloat(e.target.value))
+                }
               />
             </div>
             <div className="flex items-center px-6">
               <label htmlFor="value3" className="text-sm text-gray-700 w-1/2">
                 Абсолютная погрешность [% Δ]:
               </label>
-              <Input 
+              <Input
                 error={errors?.resultValue?.message}
                 name="value3"
                 type="number"
@@ -134,7 +132,7 @@ const CalcCountK3 = () => {
               <label htmlFor="value1" className="text-sm text-gray-700 w-1/2">
                 Разрядность:
               </label>
-              <Input 
+              <Input
                 error={errors?.resultValue?.message}
                 name="value1"
                 type="number"
@@ -162,7 +160,9 @@ const CalcCountK3 = () => {
             <h2 className="text-lg font-semibold px-6">Расчёты:</h2>
             <div className="mt-6 grid grid-cols-2 gap-6">
               <div className="flex items-center px-6">
-                <label className="text-sm text-gray-900 w-1/2">Неопределённость по типу В:</label>
+                <label className="text-sm text-gray-900 w-1/2">
+                  Неопределённость по типу В:
+                </label>
                 <Input
                   error={errors?.resultValue?.message}
                   name="uncertaintyBType"
@@ -174,7 +174,9 @@ const CalcCountK3 = () => {
                 />
               </div>
               <div className="flex items-center px-6">
-                <label className="text-sm text-gray-900 w-1/2">Суммарная неопределённость:</label>
+                <label className="text-sm text-gray-900 w-1/2">
+                  Суммарная неопределённость:
+                </label>
                 <Input
                   error={errors?.resultValue?.message}
                   name="uncertaintyTotal"
@@ -186,19 +188,25 @@ const CalcCountK3 = () => {
                 />
               </div>
               <div className="flex items-center px-6">
-                <label className="text-sm text-gray-900 w-1/2">Расширенная неопределённость:</label>
+                <label className="text-sm text-gray-900 w-1/2">
+                  Расширенная неопределённость:
+                </label>
                 <Input
                   error={errors?.resultValue?.message}
                   name="uncertaintyExpanded"
                   type="text"
                   register={register}
                   className="border border-gray-900/10 rounded px-2 py-1 w-1/2"
-                  value={getUncertaintyExpanded(getUncertaintyTotal()).toFixed(capacity)}
+                  value={getUncertaintyExpanded(getUncertaintyTotal()).toFixed(
+                    capacity
+                  )}
                   readOnly
                 />
               </div>
               <div className="flex items-center px-6">
-                <label className="text-sm text-gray-900 w-1/2">Результат неопределённости:</label>
+                <label className="text-sm text-gray-900 w-1/2">
+                  Результат неопределённости:
+                </label>
                 <Input
                   error={errors?.resultValue?.message}
                   name="resultValue"
