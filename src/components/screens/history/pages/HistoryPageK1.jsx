@@ -1,7 +1,7 @@
-import HistoryHeader from "./components/HistoryHeader";
-import Layout from "../../layout/Layout";
-import HistoryList from "./components/HistoryList";
-import HistoryTable from "./HistoryTable"
+import HistoryHeader from "../components/HistoryHeader";
+import Layout from "../../../layout/Layout";
+import HistoryList from "../components/HistoryList";
+import HistoryTable from "../table/HistoryTable";
 
 const HistoryPageK1 = () => {
   return (

@@ -29,6 +29,7 @@
     "clsx": "^2.1.1",
     "date-fns": "^3.6.0",
     "dayjs": "^1.11.13",
+    "file-saver": "^2.0.5",
     "flowbite-react": "^0.10.1",
     "gh-pages": "^6.1.1",
     "js-cookie": "^3.0.5",

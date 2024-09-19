@@ -32,9 +32,9 @@ const DropMenu = () => {
                         <li>
                             <Link to={"/history/HistoryK1"} className="block px-4 py-2 text-base text-gray-700 hover:bg-neutral-100">К1 Прямое измерение, абсолютная погрешность</Link>
                         </li>
-                        {/* <li>
-                            <Link to={"#"} className="block px-4 py-2 text-base text-gray-700 hover:bg-neutral-100">К2 Прямое измерение, относительная погрешность</Link>
-                        </li> */}
+                        <li>
+                            <Link to={"/history/HistoryK2"} className="block px-4 py-2 text-base text-gray-700 hover:bg-neutral-100">К2 Прямое измерение, относительная погрешность</Link>
+                        </li>
                     </ul>
                 </li>
                 <li className="flex flex-col">

@@ -1,13 +1,15 @@
 import { useQuery } from "react-query";
-import { useAuth } from "../../../hooks/useAuth";
-import historyService from "../../../services/history.service";
-import Loader from "../../ui/Loader";
+import { useAuth } from "../../../../hooks/useAuth";
+import historyService from "../../../../services/history.service";
+import Loader from "../../../ui/Loader";
 import { format } from "date-fns";
 import { useState } from "react";
 import { LuArrowDownWideNarrow, LuArrowUpWideNarrow, LuDownload } from 'react-icons/lu';
 import { TbArrowsUpDown } from 'react-icons/tb';
 import { IoIosArrowBack, IoIosArrowForward } from 'react-icons/io';
 import { BiArrowToLeft, BiArrowToRight } from 'react-icons/bi';
+import { saveAs } from "file-saver";
+import { $axios } from "../../../../api";
 
 const HistoryTable = () => {
   const { user } = useAuth();
@@ -19,32 +21,50 @@ const HistoryTable = () => {
 
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [currentPage, setCurrentPage] = useState(1);
-  const [sortConfig, setSortConfig] = useState({ key: null, direction: 'descending' });
+  const [sortConfig, setSortConfig] = useState({
+    key: null,
+    direction: "descending",
+  });
   const [clickCount, setClickCount] = useState({});
 
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(Number(event.target.value));
     setCurrentPage(1);
   };
-
+  const CalculatorId = 1;
   const handleSort = (key) => {
-    setClickCount(prevCount => {
+    setClickCount((prevCount) => {
       const newCount = { ...prevCount, [key]: (prevCount[key] || 0) + 1 };
 
       if (newCount[key] === 3) {
-        setSortConfig({ key: null, direction: 'descending' });
+        setSortConfig({ key: null, direction: "descending" });
         return { ...prevCount, [key]: 0 };
       }
 
-      const direction = (sortConfig.key === key && sortConfig.direction === 'descending') ? 'ascending' : 'descending';
+      const direction =
+        sortConfig.key === key && sortConfig.direction === "descending"
+          ? "ascending"
+          : "descending";
       setSortConfig({ key, direction });
 
       return newCount;
     });
   };
 
-  const handleDownload = () => {
-    console.log("Начать скачивание данных...");
+  const handleDownload = async () => {
+    try {
+      const response = await $axios.get(
+        `user/${user.decode.sub}/result/${CalculatorId}/excel`,
+        {
+          responseType: "blob",
+        }
+      );
+
+      const fileName = "calculation_results.xlsx";
+      saveAs(new Blob([response.data]), fileName);
+    } catch (error) {
+      console.error("Ошибка при загрузке файла:", error);
+    }
   };
 
   const sortedData = (data || []).slice().sort((a, b) => {
