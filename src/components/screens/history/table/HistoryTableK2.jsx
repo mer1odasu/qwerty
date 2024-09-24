@@ -30,6 +30,17 @@ const HistoryTableK2 = () => {
   });
   const [clickCount, setClickCount] = useState({});
 
+	const [selectedItems, setSelectedItems] = useState(new Set());
+	const toggleItemSelection = (id) => {
+    const newSelectedItems = new Set(selectedItems);
+    if (newSelectedItems.has(id)) {
+      newSelectedItems.delete(id);
+    } else {
+      newSelectedItems.add(id);
+    }
+    setSelectedItems(newSelectedItems);
+  };
+
   const handleItemsPerPageChange = (event) => {
     setItemsPerPage(Number(event.target.value));
     setCurrentPage(1);
@@ -117,6 +128,20 @@ const HistoryTableK2 = () => {
         <table className="min-w-full text-center border-collapse">
           <thead className="bg-white">
             <tr>
+					    <th className="py-2 px-2 text-sm font-semibold border-b border-gray-300">
+                <input
+									className="rounded-sm"
+                  type="checkbox"
+                  onChange={(e) => {
+                    if (e.target.checked) {
+                      paginatedData.forEach((item) => selectedItems.add(item.id));
+                    } else {
+                      paginatedData.forEach((item) => selectedItems.delete(item.id));
+                    }
+                    setSelectedItems(new Set(selectedItems));
+                  }}
+                />
+              </th>
               {headers.map(({ label, key }) => (
                 <th
                   key={key}
@@ -143,6 +168,14 @@ const HistoryTableK2 = () => {
                 key={item.id}
                 className="hover:bg-gray-50 border-b border-gray-200"
               >
+								<td className="py-2 px-4 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={selectedItems.has(item.id)}
+                    onChange={() => toggleItemSelection(item.id)}
+										className="rounded-sm"
+                  />
+                </td>
                 <td className="py-2 px-4 text-sm">{item.resultValue}</td>
                 <td className="py-2 px-4 text-sm">{item.value3}</td>
                 <td className="py-2 px-4 text-sm">{item.value2}</td>
